@@ -1,0 +1,51 @@
+model User {
+   id        Int      @id @unique @default(autoincrement())
+   email     String   @unique
+   name      String?
+   profile   Profile?
+   purchases Sales[]
+}
+
+model Profile {
+   id      Int     @id @unique @default(autoincrement())
+   address String?
+   picture String?
+   user    User    @relation(fields: [userId], references: [id])
+   userId  Int     @unique
+}
+
+model Product {
+   id    Int     @id @default(autoincrement())
+   books Book?
+   count Int
+   sales Sales[]
+}
+
+model Book {
+   id        Int     @id @unique @default(autoincrement())
+   ISBN      Int     @unique
+   title     String
+   price     Int
+   author    String
+   publisher String
+   product   Product @relation(fields: [productId], references: [id])
+   productId Int     @unique
+}
+
+model Sales {
+   id        Int     @id @unique @default(autoincrement())
+   buyer     User    @relation(fields: [buyerId], references: [id])
+   buyerId   Int
+   product   Product @relation(fields: [productId], references: [id])
+   productId Int
+   totalCost Int
+}
+
+datasource db {
+   provider = "postgresql"
+   url      = env("DATABASE_URL")
+}
+
+generator client {
+   provider = "prisma-client-js"
+}
