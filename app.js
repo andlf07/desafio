@@ -1,8 +1,6 @@
-const { config } = require("./config");
 const { Server } = require("./src/server");
 
-const { SERVER_PORT, SERVER_HOST } = config;
-
+//Can add parameters to Server instance port by default port = 3000 and host = 127.0.0.1
 const app = new Server();
 
 app.start();

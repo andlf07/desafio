@@ -2,9 +2,9 @@ const Hapi = require("@hapi/hapi");
 const { userRoute } = require("../src/routes/users.routes");
 const authStrategy = require("./helpers/jwt");
 class Server {
-  constructor(port, host) {
-    this.port = port | "3000";
-    this.host = "127.0.0.1";
+  constructor(port = "3000", host = "127.0.0.1") {
+    this.port = port;
+    this.host = host;
   }
 
   //Init the server
@@ -17,7 +17,7 @@ class Server {
       },
     });
     server.route(userRoute);
-    await server.register(authStrategy);
+    // await server.register(authStrategy);
     await server.start();
     return server;
   }
